@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".TimeDownActivity">
+
+    <Button
+        android:id="@+id/btTime1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/_1"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btTime2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/_2"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btTime3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/_3"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btTime4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/_4"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btTime5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/_5"
+        android:textAllCaps="false" />
+
+</LinearLayout>

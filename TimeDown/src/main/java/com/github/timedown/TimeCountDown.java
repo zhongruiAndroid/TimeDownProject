@@ -47,15 +47,21 @@ public class TimeCountDown {
     public static TimeCountDown get(){
         return new TimeCountDown();
     }
-    public void start(long timeSecond,TimeCallback timeCallback) {
-        this.timeType=TIME_TYPE_SECOND;
-        startCountdown(timeSecond*1000,0,1000,timeCallback);
+    public void startForSecond(long timeSecond,TimeCallback timeCallback) {
+        startForSecond(timeSecond,0,1,timeCallback);
     }
-
+    public void startForSecond(long timeSecond,long delayTimeSecond,TimeCallback timeCallback) {
+        startForSecond(timeSecond,delayTimeSecond,1,timeCallback);
+    }
     public void startForSecond(long timeSecond,long delayTimeSecond,long intervalTimeSecond,TimeCallback timeCallback) {
         this.timeType=TIME_TYPE_SECOND;
         startCountdown(timeSecond*1000,delayTimeSecond*1000,intervalTimeSecond*1000,timeCallback);
-
+    }
+    public void startForMillis(long timeMillis, TimeCallback timeCallback) {
+        startForMillis(timeMillis,0,1000,timeCallback);
+    }
+    public void startForMillis(long timeMillis,long delayTimeMillis, TimeCallback timeCallback) {
+        startForMillis(timeMillis,delayTimeMillis,1000,timeCallback);
     }
     public void startForMillis(long timeMillis,long delayTimeMillis,long intervalTimeMillis, TimeCallback timeCallback) {
         this.timeType=TIME_TYPE_MILLIS;

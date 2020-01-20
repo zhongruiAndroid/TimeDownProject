@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TimeDownProject</string>
+    <string name="_1">开始倒计时(6秒)(马上执行)(每1秒倒计时一次)           </string>
+    <string name="_2">开始倒计时(6秒)(延迟2秒执行)(每1秒倒计时一次)           </string>
+    <string name="_3">开始倒计时(6秒)(延迟2秒执行)(每2秒倒计时一次)           </string>
+    <string name="_4">开始倒计时(6000毫秒)(马上执行)(每500毫秒倒计时一次)  </string>
+    <string name="_5">(6000毫秒)(延迟2000毫秒执行)(每500毫秒倒计时一次)     </string>
 </resources>
