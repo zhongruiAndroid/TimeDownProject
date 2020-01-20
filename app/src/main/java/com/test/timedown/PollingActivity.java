@@ -67,4 +67,11 @@ public class PollingActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //一定要在act结束之前调用这个方法停止倒计时，否则轮询继续，如果更改view时，view为空
+        PollingCheck.onDestroy(pollingCheck);
+    }
 }
