@@ -35,10 +35,21 @@ public class PollingActivity extends AppCompatActivity {
                 pollingCheck.startForSecond(1, new PollingCheck.CheckCallback() {
                     @Override
                     public boolean onCheck(int checkCount) {
+                        /*如果满足要求，提前return少执行一次*/
+                        if(isFind){
+                            return true;
+                        }
                         tvNum.setText("轮询次数："+checkCount+"次");
+
                         //一旦返回true,代表轮询结束，接着调用complete方法
-                        return isFind;
+                        return false;
                     }
+
+                    /*或者这样写也行,延后return，多执行一次*/
+                   /* public boolean onCheck(int checkCount) {
+                        tvNum.setText("轮询次数："+checkCount+"次");
+                        return isFind;
+                    }*/
                     @Override
                     public void onComplete() {
                         //轮询完成
