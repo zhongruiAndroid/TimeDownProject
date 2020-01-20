@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".PollingActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/btStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开始轮询(一秒轮询一次)"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btEnd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="停止轮询(达到某个条件)"
+        android:textAllCaps="false" />
+    <TextView
+        android:id="@+id/tvNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="轮询次数：0次"
+        />
+</LinearLayout>

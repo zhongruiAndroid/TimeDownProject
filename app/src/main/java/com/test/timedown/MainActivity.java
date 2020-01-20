@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         btPolling.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(MainActivity.this,PollingActivity.class));
             }
         });
 

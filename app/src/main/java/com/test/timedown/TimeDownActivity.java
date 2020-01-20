@@ -99,6 +99,12 @@ public class TimeDownActivity extends AppCompatActivity implements View.OnClickL
         preStr=changText;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //一定要在act结束之前调用这个方法停止倒计时，否则倒计时继续，但是更改view时，view为空
+        TimeCountDown.onDestroy(timeCountDown);
+    }
     /*秒*/
     public void startTimeDownForSecond(final Button btTime, final String changText, long totalTime, long delayTimeMillis, long intervalTimeMillis) {
         if(timeCountDown!=null){
@@ -118,9 +124,4 @@ public class TimeDownActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        TimeCountDown.onDestroy(timeCountDown);
-    }
 }
