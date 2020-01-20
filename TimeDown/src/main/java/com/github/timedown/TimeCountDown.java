@@ -32,7 +32,7 @@ public class TimeCountDown {
                 long time = (long)msg.obj;
                 sendTime(timeType==TIME_TYPE_MILLIS?time:time/1000, timeCallback);
                 time = (long)msg.obj-intervalTime;
-                if (time <= 0) {
+                if (time < 0) {
                     timeCallback.onComplete();
                     return;
                 }
