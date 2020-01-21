@@ -13,6 +13,9 @@ if(timeCountDown==null){
      //启动之前判空，否则重复实例化会存在多个倒计时
      timeCountDown = TimeCountDown.get();
 }
+//totalTime:需要倒计时的时间
+//delayTimeMillis:延迟执行
+//intervalTimeMillis:倒计时间隔
 timeCountDown.startForSecond(totalTime,delayTimeMillis,intervalTimeMillis, new TimeCountDown.TimeCallback() {
     @Override
     public void onNext(long time) {
@@ -36,7 +39,9 @@ protected void onDestroy() {
 if(pollingCheck==null){
 	pollingCheck = PollingCheck.get();
 }
-//一秒轮询一次
+//totalTime:需要倒计时的时间
+//delayTimeMillis:延迟执行
+//intervalTimeMillis:倒计时间隔
 pollingCheck.startForSecond(1, new PollingCheck.CheckCallback() {
     @Override
     public boolean onCheck(int checkCount) {
