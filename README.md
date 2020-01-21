@@ -9,11 +9,10 @@
  }
 ```
 ```java
-if(timeCountDown!=null){
-	//如果多次重复点击,清除之前的倒计时
-    timeCountDown.reset();
+if(timeCountDown==null){
+     //启动之前判空，否则重复实例化会存在多个倒计时
+     timeCountDown = TimeCountDown.get();
 }
-timeCountDown = TimeCountDown.get();
 timeCountDown.startForSecond(totalTime,delayTimeMillis,intervalTimeMillis, new TimeCountDown.TimeCallback() {
     @Override
     public void onNext(long time) {
@@ -34,6 +33,9 @@ protected void onDestroy() {
 }
 ```
 ```java
+if(pollingCheck==null){
+	pollingCheck = PollingCheck.get();
+}
 //一秒轮询一次
 pollingCheck.startForSecond(1, new PollingCheck.CheckCallback() {
     @Override
