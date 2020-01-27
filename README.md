@@ -16,7 +16,9 @@ if(timeCountDown==null){
 //totalTime:需要倒计时的时间
 //delayTimeMillis:延迟执行
 //intervalTimeMillis:倒计时间隔
-timeCountDown.startForSecond(totalTime,delayTimeMillis,intervalTimeMillis, new TimeCountDown.TimeCallback() {
+//startForMillis:毫秒
+//startForSecond:秒
+timeCountDown.startForMillis(totalTime,delayTimeMillis,intervalTimeMillis, new TimeCountDown.TimeCallback() {
     @Override
     public void onNext(long time) {
         btTime.setText(changText + "(" + time + "s)");
@@ -39,10 +41,11 @@ protected void onDestroy() {
 if(pollingCheck==null){
 	pollingCheck = PollingCheck.get();
 }
-//totalTime:需要倒计时的时间
 //delayTimeMillis:延迟执行
-//intervalTimeMillis:倒计时间隔
-pollingCheck.startForSecond(1, new PollingCheck.CheckCallback() {
+//intervalTimeMillis:轮询间隔时间
+//startForMillis:毫秒
+//startForSecond:秒
+pollingCheck.startForSecond( delayTimeMillis, intervalTimeMillis, new PollingCheck.CheckCallback() {
     @Override
     public boolean onCheck(int checkCount) {
         /*如果满足要求，提前return少执行一次*/
