@@ -39,7 +39,7 @@ protected void onDestroy() {
 ```
 ```java
 if(pollingCheck==null){
-pollingCheck = PollingCheck.get();
+    pollingCheck = PollingCheck.get();
 }
 //delayTimeMillis:延迟执行
 //intervalTimeMillis:轮询间隔时间
