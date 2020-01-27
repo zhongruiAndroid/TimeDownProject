@@ -45,7 +45,7 @@ if(pollingCheck==null){
 //intervalTimeMillis:轮询间隔时间
 //startForMillis:毫秒
 //startForSecond:秒
-pollingCheck.startForSecond( delayTimeMillis, intervalTimeMillis, new PollingCheck.CheckCallback() {
+pollingCheck.startForMillis( delayTimeMillis, intervalTimeMillis, new PollingCheck.CheckCallback() {
     @Override
     public boolean onCheck(int checkCount) {
         /*如果满足要求，提前return少执行一次*/
