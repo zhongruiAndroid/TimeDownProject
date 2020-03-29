@@ -70,3 +70,10 @@ pollingCheck.startForMillis( delayTimeMillis, intervalTimeMillis, new PollingChe
     }
 });
 ```
+
+
+| [ ![Download](https://api.bintray.com/packages/zhongrui/mylibrary/TimeDown/images/download.svg) ](https://bintray.com/zhongrui/mylibrary/TimeDown/_latestVersion) | 最新版本号|
+|--------|----|
+```gradle
+implementation 'com.github:TimeDown:版本号'
+```
