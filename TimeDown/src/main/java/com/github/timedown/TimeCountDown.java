@@ -1,4 +1,5 @@
 package com.github.timedown;
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -21,31 +22,47 @@ public class TimeCountDown {
     private final int TIME_TYPE_SECOND=1;
     private final  int TIME_TYPE_MILLIS=2;
 
-    public TimeCountDown() {
-        handler = new Handler(Looper.getMainLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                if (msg_what != msg.what || timeCallback == null) {
-                    return;
+
+    public TimeCountDown(boolean mainThread) {
+        if(mainThread){
+            handler = new Handler(Looper.getMainLooper()) {
+                @Override
+                public void handleMessage(Message msg) {
+                    handleMsg(msg);
                 }
-                long time = (long)msg.obj;
-                sendTime(timeType==TIME_TYPE_MILLIS?time:time/1000, timeCallback);
-                time = (long)msg.obj-intervalTime;
-                if (time < 0) {
-                    timeCallback.onComplete();
-                    return;
+            };
+        }else{
+            handler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    handleMsg(msg);
                 }
-                if(handler!=null){
-                    Message message = getMessage(time);
-                    handler.sendMessageDelayed(message, intervalTime);
-                }
-            }
-        };
+            };
+        }
     }
 
+    private void handleMsg(Message msg) {
+        if (msg_what != msg.what || timeCallback == null) {
+            return;
+        }
+        long time = (long)msg.obj;
+        sendTime(timeType==TIME_TYPE_MILLIS?time:time/1000, timeCallback);
+        time = (long)msg.obj-intervalTime;
+        if (time < 0) {
+            timeCallback.onComplete();
+            return;
+        }
+        if(handler!=null){
+            Message message = getMessage(time);
+            handler.sendMessageDelayed(message, intervalTime);
+        }
+    }
+
+    public static TimeCountDown get(boolean mainThread){
+        return new TimeCountDown(mainThread);
+    }
     public static TimeCountDown get(){
-        return new TimeCountDown();
+        return get(true);
     }
     public void startForSecond(long timeSecond,TimeCallback timeCallback) {
         startForSecond(timeSecond,0,1,timeCallback);
