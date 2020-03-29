@@ -19,26 +19,43 @@ public class PollingCheck {
     private long intervalTime=1000;
     private CheckCallback checkCallback;
     private AtomicInteger atomicInteger=new AtomicInteger();
-    public PollingCheck() {
-        handler = new Handler(Looper.getMainLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                if (msg_what != msg.what || checkCallback == null) {
-                    return;
+    public PollingCheck(boolean mainThread) {
+        if(mainThread){
+            handler = new Handler(Looper.getMainLooper()) {
+                @Override
+                public void handleMessage(Message msg) {
+                    handleMsg(msg);
                 }
-                boolean isSuccess = checkCallback.onCheck(atomicInteger.incrementAndGet());
-                if(isSuccess){
-                    checkCallback.onComplete();
-                }else{
-                    if (handler != null) {
-                        handler.sendMessageDelayed(getMessage(), intervalTime);
-                    }
+            };
+        }else{
+            handler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    handleMsg(msg);
                 }
-            }
-        };
+            };
+        }
     }
+
+    private void handleMsg(Message msg) {
+        if (msg_what != msg.what || checkCallback == null) {
+            return;
+        }
+        boolean isSuccess = checkCallback.onCheck(atomicInteger.incrementAndGet());
+        if(isSuccess){
+            checkCallback.onComplete();
+        }else{
+            if (handler != null) {
+                handler.sendMessageDelayed(getMessage(), intervalTime);
+            }
+        }
+    }
+
     public static PollingCheck get(){
-        return new PollingCheck();
+        return get(true);
+    }
+    public static PollingCheck get(boolean mainThread){
+        return new PollingCheck(mainThread);
     }
     public void start(CheckCallback checkCallback) {
         startPolling(0,500, checkCallback);
