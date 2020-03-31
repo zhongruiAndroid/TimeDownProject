@@ -22,47 +22,31 @@ public class TimeCountDown {
     private final int TIME_TYPE_SECOND=1;
     private final  int TIME_TYPE_MILLIS=2;
 
-
-    public TimeCountDown(boolean mainThread) {
-        if(mainThread){
-            handler = new Handler(Looper.getMainLooper()) {
-                @Override
-                public void handleMessage(Message msg) {
-                    handleMsg(msg);
+    public TimeCountDown() {
+        handler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg_what != msg.what || timeCallback == null) {
+                    return;
                 }
-            };
-        }else{
-            handler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    handleMsg(msg);
+                long time = (long)msg.obj;
+                sendTime(timeType==TIME_TYPE_MILLIS?time:time/1000, timeCallback);
+                time = (long)msg.obj-intervalTime;
+                if (time < 0) {
+                    timeCallback.onComplete();
+                    return;
                 }
-            };
-        }
+                if(handler!=null){
+                    Message message = getMessage(time);
+                    handler.sendMessageDelayed(message, intervalTime);
+                }
+            }
+        };
     }
 
-    private void handleMsg(Message msg) {
-        if (msg_what != msg.what || timeCallback == null) {
-            return;
-        }
-        long time = (long)msg.obj;
-        sendTime(timeType==TIME_TYPE_MILLIS?time:time/1000, timeCallback);
-        time = (long)msg.obj-intervalTime;
-        if (time < 0) {
-            timeCallback.onComplete();
-            return;
-        }
-        if(handler!=null){
-            Message message = getMessage(time);
-            handler.sendMessageDelayed(message, intervalTime);
-        }
-    }
-
-    public static TimeCountDown get(boolean mainThread){
-        return new TimeCountDown(mainThread);
-    }
     public static TimeCountDown get(){
-        return get(true);
+        return new TimeCountDown();
     }
     public void startForSecond(long timeSecond,TimeCallback timeCallback) {
         startForSecond(timeSecond,0,1,timeCallback);
@@ -112,13 +96,26 @@ public class TimeCountDown {
     public void onDestroy() {
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
-            handler = null;
         }
+    }
+    public void onDestroyAndClearHandler() {
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler=null;
+        }
+    }
+    public Handler getHandler() {
+        return handler;
     }
 
     public static void onDestroy(TimeCountDown timeCountDown) {
         if (timeCountDown != null) {
             timeCountDown.onDestroy();
+        }
+    }
+    public static void onDestroyAndClearHandler(PollingCheck pollingCheck) {
+        if (pollingCheck != null) {
+            pollingCheck.onDestroyAndClearHandler();
         }
     }
 }

@@ -19,43 +19,26 @@ public class PollingCheck {
     private long intervalTime=1000;
     private CheckCallback checkCallback;
     private AtomicInteger atomicInteger=new AtomicInteger();
-    public PollingCheck(boolean mainThread) {
-        if(mainThread){
-            handler = new Handler(Looper.getMainLooper()) {
-                @Override
-                public void handleMessage(Message msg) {
-                    handleMsg(msg);
+    public PollingCheck() {
+        handler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                if (msg_what != msg.what || checkCallback == null) {
+                    return;
                 }
-            };
-        }else{
-            handler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    handleMsg(msg);
+                boolean isSuccess = checkCallback.onCheck(atomicInteger.incrementAndGet());
+                if(isSuccess){
+                    checkCallback.onComplete();
+                }else{
+                    if (handler != null) {
+                        handler.sendMessageDelayed(getMessage(), intervalTime);
+                    }
                 }
-            };
-        }
-    }
-
-    private void handleMsg(Message msg) {
-        if (msg_what != msg.what || checkCallback == null) {
-            return;
-        }
-        boolean isSuccess = checkCallback.onCheck(atomicInteger.incrementAndGet());
-        if(isSuccess){
-            checkCallback.onComplete();
-        }else{
-            if (handler != null) {
-                handler.sendMessageDelayed(getMessage(), intervalTime);
             }
-        }
+        };
     }
-
     public static PollingCheck get(){
-        return get(true);
-    }
-    public static PollingCheck get(boolean mainThread){
-        return new PollingCheck(mainThread);
+        return new PollingCheck();
     }
     public void start(CheckCallback checkCallback) {
         startPolling(0,500, checkCallback);
@@ -98,13 +81,25 @@ public class PollingCheck {
     public void onDestroy() {
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
-            handler = null;
         }
     }
-
+    public void onDestroyAndClearHandler() {
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler=null;
+        }
+    }
+    public Handler getHandler() {
+        return handler;
+    }
     public static void onDestroy(PollingCheck pollingCheck) {
         if (pollingCheck != null) {
             pollingCheck.onDestroy();
+        }
+    }
+    public static void onDestroyAndClearHandler(PollingCheck pollingCheck) {
+        if (pollingCheck != null) {
+            pollingCheck.onDestroyAndClearHandler();
         }
     }
 }
