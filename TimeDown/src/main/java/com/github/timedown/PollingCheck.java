@@ -59,7 +59,9 @@ public class PollingCheck {
         reset();
         this.intervalTime=intervalTimeMillis;
         this.checkCallback = checkCallback;
-        handler.sendMessageDelayed(getMessage(), delayTimeMillis);
+        if(handler!=null){
+            handler.sendMessageDelayed(getMessage(), delayTimeMillis);
+        }
     }
 
     private Message getMessage() {

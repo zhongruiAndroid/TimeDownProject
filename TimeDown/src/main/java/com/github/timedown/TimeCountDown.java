@@ -73,7 +73,9 @@ public class TimeCountDown {
         this.intervalTime=intervalTimeMillis;
         this.timeCallback = timeCallback;
         Message message = getMessage(timeMillis);
-        handler.sendMessageDelayed(message, delayTimeMillis);
+        if(handler!=null){
+            handler.sendMessageDelayed(message, delayTimeMillis);
+        }
     }
 
     private Message getMessage(long time) {
