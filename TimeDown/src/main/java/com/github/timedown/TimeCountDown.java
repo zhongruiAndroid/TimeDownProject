@@ -1,5 +1,5 @@
 package com.github.timedown;
-import android.annotation.SuppressLint;
+
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
