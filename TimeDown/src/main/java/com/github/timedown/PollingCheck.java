@@ -91,9 +91,6 @@ public class PollingCheck {
             handler=null;
         }
     }
-    public Handler getHandler() {
-        return handler;
-    }
     public static void onDestroy(PollingCheck pollingCheck) {
         if (pollingCheck != null) {
             pollingCheck.onDestroy();
