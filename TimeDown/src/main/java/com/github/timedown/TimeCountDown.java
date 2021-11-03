@@ -70,6 +70,15 @@ public class TimeCountDown {
     }
     private void startCountdown(long timeMillis,long delayTimeMillis,long intervalTimeMillis, TimeCallback timeCallback){
         reset();
+        if(timeMillis<0){
+            timeMillis=0;
+        }
+        if(delayTimeMillis<0){
+            delayTimeMillis=0;
+        }
+        if(intervalTimeMillis<0){
+            intervalTimeMillis=0;
+        }
         this.intervalTime=intervalTimeMillis;
         this.timeCallback = timeCallback;
         Message message = getMessage(timeMillis);
@@ -105,9 +114,6 @@ public class TimeCountDown {
             handler.removeCallbacksAndMessages(null);
             handler=null;
         }
-    }
-    public Handler getHandler() {
-        return handler;
     }
 
     public static void onDestroy(TimeCountDown timeCountDown) {

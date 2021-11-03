@@ -57,6 +57,12 @@ public class PollingCheck {
     }
     private void startPolling(long delayTimeMillis, long intervalTimeMillis, CheckCallback checkCallback){
         reset();
+        if(delayTimeMillis<0){
+            delayTimeMillis=0;
+        }
+        if(intervalTimeMillis<0){
+            intervalTimeMillis=0;
+        }
         this.intervalTime=intervalTimeMillis;
         this.checkCallback = checkCallback;
         if(handler!=null){
