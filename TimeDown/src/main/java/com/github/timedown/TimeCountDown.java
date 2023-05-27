@@ -100,11 +100,13 @@ public class TimeCountDown {
         }
     }
     public void reset(){
+        this.timeCallback=null;
         if(handler!=null){
             handler.removeCallbacksAndMessages(null);
         }
     }
     public void onDestroy() {
+        this.timeCallback=null;
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
         }

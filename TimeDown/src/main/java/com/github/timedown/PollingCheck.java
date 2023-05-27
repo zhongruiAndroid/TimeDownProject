@@ -78,6 +78,7 @@ public class PollingCheck {
 
 
     public void reset(){
+        this.checkCallback=null;
         if(atomicInteger==null){
             atomicInteger=new AtomicInteger();
         }
@@ -87,6 +88,7 @@ public class PollingCheck {
         }
     }
     public void onDestroy() {
+        this.checkCallback=null;
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
         }
